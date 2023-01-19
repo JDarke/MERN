@@ -1,21 +1,22 @@
 const express = require('express');
 const app = express();
-const database = require('./model');
+const entriesDb = require('./model');
 const port = 5001;
 
-database.mongoose
+entriesDb.mongoose
     .set('strictQuery', true)
-    .connect(database.url, {
+    .connect(entriesDb.url, {
         useNewUrlParser: true,
     })
     .then(() => {
-        console.log(`Connected to db: ${database.url}`);
+        console.log(`Connected to db: ${entriesDb.url}`);
     })
-    .catch((e) => {
+    .catch((e: any) => {
         console.log('Failed to connect to db:', e);
         process.exit();
     });
 
-app.get('/', (req, res) => res.send('Succesful GET'));
+app.get('/', (req: any, res: any) => res.send('Successful GET'));
 
+require("./routes/entry.routes")(app);
 app.listen(port, () => console.log(`Server running on port ${port}`));
