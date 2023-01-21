@@ -2,6 +2,13 @@ const express = require('express');
 const app = express();
 const entriesDb = require('./model');
 const port = 5001;
+const cors = require("cors");
+const corsOptions = {
+    origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
 
 entriesDb.mongoose
     .set('strictQuery', true)
@@ -15,8 +22,6 @@ entriesDb.mongoose
         console.log('Failed to connect to db:', e);
         process.exit();
     });
-
-app.get('/', (req: any, res: any) => res.send('Successful GET'));
 
 require("./routes/entry.routes")(app);
 app.listen(port, () => console.log(`Server running on port ${port}`));

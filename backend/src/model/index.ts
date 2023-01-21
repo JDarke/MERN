@@ -1,13 +1,13 @@
 import { CONFIG } from '../config/database';
 const mongoose = require('mongoose');
 
-interface Idb {
+interface IDB {
     mongoose: any;
     url: string;
-    entries?: string;
+    entries: any;
 }
 
-const database: Idb = {
+const database: IDB = {
     mongoose: mongoose, 
     url: CONFIG.url,
     entries: require('./entry.model.ts')(mongoose),
