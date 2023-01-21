@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as API from './service/api.service';
@@ -40,6 +40,10 @@ const App = () => {
       date: 'Test date',
       time: 'test time'
   }
+
+  useEffect(() => {
+    getEntries();
+  }, []);
 
   return (
     <div className="App">
