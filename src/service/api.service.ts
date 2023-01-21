@@ -1,29 +1,48 @@
-const endpoint = 'http://localhost:5001';
+import { BASEURL } from "../shared/config";
+import { HttpMethod } from "../shared/enum";
+import { IEntryRequest, IHttpOptions, IResponse } from '../shared/interface';
 
-export const addEntry = async (req) => {
-    const response = await fetch(`${endpoint}/api/entries`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          title: req.title,
-          text: req.text,
-          date: req.date,
-          time: req.time 
-      }),
-    });
-    const data = await response.json();
-    console.log('Add entry response: ', data);
+
+const sendRequest = async (endpoint: string, requestOptions: IHttpOptions) => {
+	try {
+		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
+		const data = await response.json();
+		console.log(`Response from ${requestOptions.method} ${endpoint}: `, data);
+
+		if (!response.ok) {
+			throw new Error(data.message);
+		}
+		return {data};
+	}	catch (e) {
+		return {error: e.message};
+	}
 };
 
-export const getEntries = async () => {
-    const response = await fetch(`${endpoint}/api/entries`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    console.log('Get entries response: ', data);
+export const addEntry = async (req: IEntryRequest): Promise<IResponse> => {
+	const endpoint = '/api/entries';
+	const requestOptions = {
+		method: HttpMethod.POST,
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(req)
+	};
+
+	return sendRequest(endpoint, requestOptions);
+};
+
+export const getEntries = async (): Promise<IResponse> => {
+	const endpoint = '/api/entries';
+	const requestOptions = {
+		method: HttpMethod.GET,
+	};
+
+	return sendRequest(endpoint, requestOptions);
+};
+
+export const deleteEntry = async (id: string): Promise<IResponse> => {
+	const endpoint = `/api/entries/${id}`;
+	const requestOptions = {
+		method: HttpMethod.DELETE,
+	};
+
+	return sendRequest(endpoint, requestOptions);
 };
