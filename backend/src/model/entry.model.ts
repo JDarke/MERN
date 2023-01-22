@@ -4,10 +4,10 @@ module.exports = (mongoose: any): any => {
         mongoose.Schema(
             {
                 title: String,
+                author: String,
                 text: String,
                 date: String,
                 time: String,
-                author: String,
             },
         )
     );

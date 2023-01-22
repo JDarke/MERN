@@ -7,6 +7,7 @@ const Entry = db.entries;
 exports.addEntry = (req: IRequest, res: Response) => {
   const entry = new Entry({
     title: req.body.title,
+		author: req.body.author,
     text: req.body.text,
     date: req.body.date,
     time: req.body.time 
@@ -43,16 +44,17 @@ exports.deleteEntry = (req: IRequest, res: Response) => {
   const id = req.params.id;
   
   Entry.findByIdAndRemove(id)
-    .then((res: any) => {
-    if (!res) {
-      res.status(404).send({
-				message: `Failed delete entry with id ${id} - entry not found`
-      });
-    } else {
-      res.send({
-				message: `Deleted entry ${id}`
-      });
-    }
+    .then((data: IEntry) => {
+			console.log('res', data);
+			if (!data) {
+				res.status(404).send({
+					message: `Failed delete entry with id ${id} - entry not found`
+				});
+			} else {
+				res.send({
+					message: `Deleted entry ${id}`
+				});
+			}
     })
     .catch((e: Error) => {
 			res.status(500).send({

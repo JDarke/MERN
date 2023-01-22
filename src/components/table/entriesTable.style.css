@@ -5,6 +5,13 @@ table {
 }
 
 th, td {
-  text-align: center;
+  text-align: left;
   padding: 8px;
+  max-width: 200px;
+  vertical-align: text-top;
+}
+
+.cell-sm {
+  width:0.1%;
+  white-space: nowrap;
 }

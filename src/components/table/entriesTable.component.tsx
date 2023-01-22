@@ -50,7 +50,7 @@ const EntriesTable = ({ entries, refresh }) => {
     <>
       <Modal show={showEditModal} onHide={handleCloseModal} animation={true}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit entry</Modal.Title>
+          <Modal.Title className='text-center'>Edit entry</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <EntryForm addEntry={updateEntry} entry={selectedEntry} />
@@ -60,6 +60,7 @@ const EntriesTable = ({ entries, refresh }) => {
       <table>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Text</th>
@@ -68,17 +69,24 @@ const EntriesTable = ({ entries, refresh }) => {
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry) => (
+          {!!entries?.length && entries.map((entry) => (
             <tr key={entry._id}>
+              <td>{entry._id.slice(-6)}</td>
               <td>{entry.title}</td>
               <td>{entry.author}</td>
               <td>{entry.text}</td>
               <td>{entry.date}</td>
               <td>{entry.time}</td>
-              <td><button className="btn btn-primary" onClick={() => handleOpenModal(entry)}>Edit</button></td>
-              <td><button className="btn btn-danger" onClick={() => deleteEntry(entry)}>Delete</button></td>
+              <td className="cell-sm pe-0 justify-content-end"><button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button></td>
+              <td className="cell-sm pe-0 justify-content-end"><button className="btn btn-info btn-sm" onClick={() => deleteEntry(entry)}>PDF</button></td>
+              <td className="cell-sm"><button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button></td>
             </tr>
           ))}
+          {!entries?.length && (
+            <tr>
+              <td colSpan={8}>No entries</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </>

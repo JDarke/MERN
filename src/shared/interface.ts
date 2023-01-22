@@ -8,6 +8,7 @@ export interface IHttpOptions {
 
 export interface IEntryBase {
 	title: string;
+    author: string;
 	text: string;
 	date: string;
 	time: string;

@@ -11,6 +11,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 	// Set initial values for form, use existing entry values if editing
 	const [formValues, setFormValues] = useState({
 		title: entry?.title || '',
+		author: entry?.author || '',
 		text: entry?.text || '',
 		date: entry?.date || '',
 		time: {
@@ -34,12 +35,14 @@ const EntryForm = ({ addEntry, entry = null }) => {
 	const onSubmit = (): void => {
 		const newEntryRequest: IEntryBase = {
 			title: formValues.title,
+			author: formValues.author,
 			text: formValues.text,
 			date: formValues.date,
 			time: `${formValues.time.hour}:${formValues.time.minute} ${formValues.time.type}`
 		};
 		setFormValues({
 			title: '',
+			author: '',
 			text: '',
 			date: '',
 			time: {
@@ -58,7 +61,8 @@ const EntryForm = ({ addEntry, entry = null }) => {
 	}
 
 	const formIsValid = (): boolean => {
-		return formValues.title 
+		return formValues.title
+			&& formValues.author
 			&& formValues.text
 			&& formValues.date
 			&& formValues.time.hour
@@ -72,15 +76,14 @@ const EntryForm = ({ addEntry, entry = null }) => {
 	}, [formValues]);
 
 	return (
-		<Container className="mt-4 mb-5 d-flex flex-column align-items-center">
+		<Container className="mt-4 mb-5 d-flex flex-column align-items-center form-wrapper">
 			{!entry && <h3 className="mb-3 text-center">Create new entry</h3>}
-			<Form className="me-5 w-50">
+			<Form className="">
 
-				<Form.Group className="mb-3 ms-4 d-flex" controlId="form.title">
-					<Form.Label className="me-3 mb-0">Title</Form.Label>
+				<Form.Group className="mb-3  d-flex" controlId="form.title">
+					<Form.Label className="form-label me-3 mb-0">Title</Form.Label>
 					<Form.Control
 						size='sm'
-						className="me-3"
 						isInvalid={null}
 						name="title"
 						onChange={handleChange}
@@ -90,25 +93,37 @@ const EntryForm = ({ addEntry, entry = null }) => {
 					/>
 				</Form.Group>
 
-				<Form.Group className="mb-3 ms-4 d-flex" controlId="form.text">
-					<Form.Label className="me-3 mb-0">Text</Form.Label>
+				<Form.Group className="mb-3  d-flex" controlId="form.author">
+					<Form.Label className="form-label me-3 mb-0">Author</Form.Label>
 					<Form.Control
 						size='sm'
-						className="me-3"
 						isInvalid={null}
-						name="text"
+						name="author"
 						onChange={handleChange}
-						value={formValues.text}
+						value={formValues.author}
 						type="text"
 						placeholder=""
 					/>
 				</Form.Group>
 
-				<Form.Group className="mb-3 ms-4 d-flex" controlId="form.date">
-					<Form.Label className="me-3 mb-0">Date</Form.Label>
+				<Form.Group className="mb-3  d-flex" controlId="form.text">
+					<Form.Label className="form-label me-3 mb-0">Text</Form.Label>
 					<Form.Control
 						size='sm'
-						className="me-3"
+						isInvalid={null}
+						name="text"
+						onChange={handleChange}
+						value={formValues.text}
+						type="text"
+						as="textarea"
+						placeholder=""
+					/>
+				</Form.Group>
+
+				<Form.Group className="mb-3  d-flex" controlId="form.date">
+					<Form.Label className="form-label me-3 mb-0">Date</Form.Label>
+					<Form.Control
+						size='sm'
 						isInvalid={null}
 						name="date"
 						onChange={handleChange}
@@ -119,8 +134,9 @@ const EntryForm = ({ addEntry, entry = null }) => {
 				</Form.Group>
 
 				<div className="d-flex flex-row">
-					<Form.Group className="mb-3 ms-4 d-flex" controlId="form.time.hour">
-						<Form.Label className="me-3 mb-0">Time</Form.Label>
+					<Form.Label className="mb-0 custom-label">Time</Form.Label>
+					<Form.Group className="mb-3 " controlId="form.time.hour">
+
 						<Form.Control
 							size='sm'
 							onChange={handleTimeChange}
@@ -146,10 +162,10 @@ const EntryForm = ({ addEntry, entry = null }) => {
 							name="minute"
 						>
 							{minutes.map((item, index) => (
-									<option key={index} value={item}>
-										{item}
-									</option>
-								))}
+								<option key={index} value={item}>
+									{item}
+								</option>
+							))}
 						</Form.Control>
 					</Form.Group>
 					<Form.Group className="mb-3 ms-3 d-flex" controlId="form.time.type">
@@ -168,9 +184,9 @@ const EntryForm = ({ addEntry, entry = null }) => {
 						</Form.Control>
 					</Form.Group>
 				</div>
-				
+
 			</Form>
-			<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary">Submit</button>
+			<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary btn-submit">Submit</button>
 		</Container>
 	);
 };
