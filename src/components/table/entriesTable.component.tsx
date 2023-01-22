@@ -47,10 +47,10 @@ const EntriesTable = ({ entries, refresh }) => {
   }
 
   // Download a pdf from base64
-  const downloadPDF = (pdf: string) => {
+  const downloadPDF = (pdf: string, title: string) => {
     const linkSource = `data:application/pdf;base64,${pdf}`;
-    const downloadLink = document.createElement("a");
-    const fileName = "abc.pdf";
+    const downloadLink = document.createElement('a');
+    const fileName = `${title}.pdf`;
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();
@@ -61,7 +61,7 @@ const EntriesTable = ({ entries, refresh }) => {
     API.getPdf(entry._id)
       .then((res) => {
         if (!res.error) {
-          downloadPDF(res.data);
+          downloadPDF(res.data, entry.title);
         } else {
           window.alert(res.error);
         }
