@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# ui-dev-task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Initiate DB
+Using Docker:
+    `docker run -p 27017:27017 --name expressdb -d mongo:latest`
 
-## Available Scripts
+Without Docker:
+    - Install MongoDB community edition: https://www.mongodb.com/docs/manual/installation/
+    - For MacOS:
+        - Start mongo: `brew services start mongodb-community@6.0`
+        - Connect shell to the instance: `mongosh`.
+    - For other platforms see the above link for details
 
-In the project directory, you can run:
+# Start Backend
+- From /backend run `npm i` to install packages
+- run `npm run app` to start the server, or `npm run dev` for nodemon live reloading
+The server runs on port 5001 by default.
 
-### `npm start`
+# Start Frontend
+- From root, run `npm i` 
+- run `npm run start`
+*** The FE runs on port 3000 by default.  If this port is in use, you'll need to change the CORS origin in `/backend/src/config/server.ts` to match the current port ***
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Build
+- BE: `npm run compile`
+- FE: `npm run build`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# API endpoints
 
-### `npm test`
+__ADD ENTRY__:
+    `/api/entries`
+    method: POST
+    body: {
+        title: string;
+        author: string;
+        text: string;
+        date: string; (yyyy/mm/dd)
+        time: string; (hh:mm am/pm)
+    }
+    res: [
+        {
+            _id: string;
+            title: string;
+            author: string;
+            text: string;
+            date: string; (yyyy/mm/dd)
+            time: string; (hh:mm am/pm) 
+        }
+    ]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+__GET ENTRIES__:
+    `/api/entries`
+    method: GET
+    body: n/a
+    res: [
+            {
+                _id: string;
+                title: string;
+                author: string;
+                text: string;
+                date: string; (yyyy/mm/dd)
+                time: string; (hh:mm am/pm) 
+            }, 
+            ...
+        ]
 
-### `npm run build`
+__UPDATE ENTRY__:
+    `/api/entries/:id`
+    method: PUT
+    body: n/a
+    params: id: string
+    res: [{
+            _id: string;
+            title: string;
+            author: string;
+            text: string;
+            date: string; (yyyy/mm/dd)
+            time: string; (hh:mm am/pm) 
+        }]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+__DELETE ENTRY__:
+    `/api/entries/:id`
+    method: DELETE
+    body: n/a
+    params: id: string
+    res: [{
+            message: string
+        }]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+__GET PDF__:
+    `/api/entries/:id`
+    method: GET
+    body: n/a
+    params: id: string
+    res: string (base64)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

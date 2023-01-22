@@ -59,7 +59,6 @@ const App = () => {
         {view === 'review' && <EntriesTable entries={entries} refresh={getEntries} />}
         {view === 'add' && <EntryForm addEntry={addEntry} />}
       </div>
-      <button onClick={() => addEntry(testEntry)}>POST</button>
     </div>
   );
 }

@@ -1,11 +1,10 @@
+import { CORSOPTIONS, PORT } from "./config/server";
 const express = require('express');
 const app = express();
 const entriesDb = require('./model');
-const port = 5001;
+const port = PORT;
 const cors = require("cors");
-const corsOptions = {
-    origin: "http://localhost:3000"
-};
+const corsOptions = CORSOPTIONS;
 
 app.use(cors(corsOptions));
 app.use(express.json());
