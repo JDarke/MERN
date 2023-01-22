@@ -9,6 +9,7 @@ Without Docker:
     - For MacOS:
         - Start mongo: `brew services start mongodb-community@6.0`
         - Connect shell to the instance: `mongosh`.
+        - Create DB named entries: `use entries`.
     - For other platforms see the above link for details
 
 # Start Backend
