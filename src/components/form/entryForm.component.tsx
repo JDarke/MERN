@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './entriesForm.style.css';
 import { Container, Form } from 'react-bootstrap';
 import { IEntryBase } from '../../shared/interface';
@@ -70,10 +70,6 @@ const EntryForm = ({ addEntry, entry = null }) => {
 			&& formValues.time.type
 			&& formHasChanged();
 	};
-
-	useEffect(() => {
-		console.log('formValues', formValues);
-	}, [formValues]);
 
 	return (
 		<Container className="mt-4 mb-5 d-flex flex-column align-items-center form-wrapper">

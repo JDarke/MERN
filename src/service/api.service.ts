@@ -7,7 +7,6 @@ const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Prom
 	try {
 		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
 		const data: IEntry[] | Error = await response.json();
-		console.log(`Response from ${requestOptions.method} ${endpoint}: `, data);
 
 		if (!response.ok) {
 			throw new Error((data as Error).message);

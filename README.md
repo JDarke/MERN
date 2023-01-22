@@ -92,3 +92,7 @@ __GET PDF__:
     params: id: string
     res: string (base64)
 
+
+# Suggestions
+It would obviously be preferable to have written tests for the components and api service, had time permitted.  
+I'd also have liked to: refine the error handling, get it production-ready for deployment (move some of the config variables to the .env, run builds, write production instructions, etc.), and there are a couple of magic numbers in the CSS for the form that I'm not happy about.

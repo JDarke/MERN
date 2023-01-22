@@ -45,7 +45,6 @@ exports.deleteEntry = (req: IRequest, res: Response) => {
   
   Entry.findByIdAndRemove(id)
     .then((data: IEntry) => {
-			console.log('res', data);
 			if (!data) {
 				res.status(404).send({
 					message: `Failed delete entry with id ${id} - entry not found`

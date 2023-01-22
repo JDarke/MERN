@@ -2,11 +2,9 @@ import { CORSOPTIONS, PORT } from "./config/server";
 const express = require('express');
 const app = express();
 const entriesDb = require('./model');
-const port = PORT;
 const cors = require("cors");
-const corsOptions = CORSOPTIONS;
 
-app.use(cors(corsOptions));
+app.use(cors(CORSOPTIONS));
 app.use(express.json());
 
 entriesDb.mongoose
@@ -23,4 +21,4 @@ entriesDb.mongoose
     });
 
 require("./routes/entry.routes")(app);
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
