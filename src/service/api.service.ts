@@ -1,18 +1,18 @@
 import { BASEURL } from "../shared/config";
 import { HttpMethod } from "../shared/enum";
-import { IEntryRequest, IHttpOptions, IResponse } from '../shared/interface';
+import { IEntry, IEntryRequest, IHttpOptions, IResponse } from '../shared/interface';
 
 
-const sendRequest = async (endpoint: string, requestOptions: IHttpOptions) => {
+const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Promise<IResponse> => {
 	try {
 		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
-		const data = await response.json();
+		const data: IEntry[] | Error = await response.json();
 		console.log(`Response from ${requestOptions.method} ${endpoint}: `, data);
 
 		if (!response.ok) {
-			throw new Error(data.message);
+			throw new Error((data as Error).message);
 		}
-		return {data};
+		return {data: (data as IEntry[])};
 	}	catch (e) {
 		return {error: e.message};
 	}
@@ -20,7 +20,7 @@ const sendRequest = async (endpoint: string, requestOptions: IHttpOptions) => {
 
 export const addEntry = async (req: IEntryRequest): Promise<IResponse> => {
 	const endpoint = '/api/entries';
-	const requestOptions = {
+	const requestOptions: IHttpOptions = {
 		method: HttpMethod.POST,
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(req)
@@ -31,7 +31,7 @@ export const addEntry = async (req: IEntryRequest): Promise<IResponse> => {
 
 export const getEntries = async (): Promise<IResponse> => {
 	const endpoint = '/api/entries';
-	const requestOptions = {
+	const requestOptions: IHttpOptions = {
 		method: HttpMethod.GET,
 	};
 
@@ -40,8 +40,19 @@ export const getEntries = async (): Promise<IResponse> => {
 
 export const deleteEntry = async (id: string): Promise<IResponse> => {
 	const endpoint = `/api/entries/${id}`;
-	const requestOptions = {
+	const requestOptions: IHttpOptions = {
 		method: HttpMethod.DELETE,
+	};
+
+	return sendRequest(endpoint, requestOptions);
+};
+
+export const updateEntry = async (req: IEntry): Promise<IResponse> => {
+	const endpoint = `/api/entries/${req._id}`;
+	const requestOptions: IHttpOptions = {
+		method: HttpMethod.PUT,
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(req)
 	};
 
 	return sendRequest(endpoint, requestOptions);

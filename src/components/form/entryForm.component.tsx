@@ -1,19 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import './entriesForm.style.css';
 import * as API from '../../service/api.service';
 import { Container, Form } from 'react-bootstrap';
+import { IEntryRequest } from '../../shared/interface';
 
-const EntryForm = ({ entries }) => {
+const hours = Array.from(Array(12).keys()).map((hour) => (hour + 1).toString());
+const minutes = Array.from(Array(60).keys()).map((minute) => (minute < 10 ? `0${minute}` : minute.toString()));
+
+const EntryForm = ({ addEntry, entry = null }) => {
 	const [formValues, setFormValues] = useState({
-		title: '',
-		text: '',
-		date: '',
-		time: ''
+		title: entry?.title || '',
+		text: entry?.text || '',
+		date: entry?.date || '',
+		time: {
+			hour: entry?.time?.split('-')[0] || '1',
+			minute: entry?.time?.split('-')[1]?.split(' ')[0] || '00',
+			type: entry?.time?.split('-')[1]?.split(' ')[1] || 'AM'
+		}
 	});
 
-	const handleChange = (event) => {
+	const handleChange = (event): void => {
+		console.log('event', event)
 		const { name, value } = event.target;
 		setFormValues({ ...formValues, [name]: value });
+	};
+
+	const handleTimeChange = (event): void => {
+		const { name, value } = event.target;
+		setFormValues({ ...formValues, time: { ...formValues.time, [name]: value } });
+	};
+
+	const onSubmit = (): void => {
+		const newEntryRequest: IEntryRequest = {
+			title: formValues.title,
+			text: formValues.text,
+			date: formValues.date,
+			time: `${formValues.time.hour}:${formValues.time.minute} ${formValues.time.type}`
+		};
+
+		addEntry(newEntryRequest);
+	};
+
+	const formIsValid = (): boolean => {
+		return formValues.title && formValues.text && formValues.date && formValues.time.hour && formValues.time.minute && formValues.time.type;
 	};
 
 	useEffect(() => {
@@ -22,7 +51,7 @@ const EntryForm = ({ entries }) => {
 
 	return (
 		<Container className="mt-4 mb-5 d-flex flex-column align-items-center">
-			<h3 className="mb-3 text-center">Create new entry</h3>
+			{!entry && <h3 className="mb-3 text-center">Create new entry</h3>}
 			<Form className="me-5 w-50">
 
 				<Form.Group className="mb-3 ms-4 d-flex" controlId="form.title">
@@ -45,7 +74,7 @@ const EntryForm = ({ entries }) => {
 						size='sm'
 						className="me-3"
 						isInvalid={null}
-						name="title"
+						name="text"
 						onChange={handleChange}
 						value={formValues.text}
 						type="text"
@@ -59,54 +88,57 @@ const EntryForm = ({ entries }) => {
 						size='sm'
 						className="me-3"
 						isInvalid={null}
-						name="title"
+						name="date"
 						onChange={handleChange}
 						value={formValues.date}
 						type="date"
 						placeholder=""
 					/>
 				</Form.Group>
+
 				<div className="d-flex flex-row">
-					<Form.Group className="mb-3 ms-4 d-flex" controlId="form.time">
+					<Form.Group className="mb-3 ms-4 d-flex" controlId="form.time.hour">
 						<Form.Label className="me-3 mb-0">Time</Form.Label>
 						<Form.Control
 							size='sm'
-							onChange={handleChange}
+							onChange={handleTimeChange}
 							isInvalid={null}
-							value={formValues.time}
+							value={formValues.time.hour}
 							as="select"
-							name="time"
+							name="hour"
 						>
-							{[...Array(13).keys()].splice(1).map((item, index) => (
-								<option key={index} value={item}>
+							{hours.map((item, index) => (
+								<option key={index} value={item.toString()}>
 									{item}
 								</option>))}
 						</Form.Control>
 					</Form.Group>
 					<div className="ms-2">:</div>
-					<Form.Group className="mb-3 ms-2 d-flex" controlId="form.time">
+					<Form.Group className="mb-3 ms-2 d-flex" controlId="form.time.minute">
 						<Form.Control
 							size='sm'
-							onChange={handleChange}
+							onChange={handleTimeChange}
 							isInvalid={null}
-							value={formValues.time}
+							value={formValues.time.minute}
 							as="select"
-							name="time"
+							name="minute"
 						>
-							{[...Array(60).keys()].map((item, index) => (
-								<option key={index} value={item}>
-									{item}
-								</option>))}
+							{
+								minutes.map((item, index) => (
+									<option key={index} value={item}>
+										{item}
+									</option>
+								))}
 						</Form.Control>
 					</Form.Group>
-					<Form.Group className="mb-3 ms-3 d-flex" controlId="form.time">
+					<Form.Group className="mb-3 ms-3 d-flex" controlId="form.time.type">
 						<Form.Control
 							size='sm'
-							onChange={handleChange}
+							onChange={handleTimeChange}
 							isInvalid={null}
-							value={formValues.time}
+							value={formValues.time.type}
 							as="select"
-							name="time"
+							name="type"
 						>
 							{['AM', 'PM'].map((item, index) => (
 								<option key={index} value={item}>
@@ -115,6 +147,7 @@ const EntryForm = ({ entries }) => {
 						</Form.Control>
 					</Form.Group>
 				</div>
+				<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary">Submit</button>
 			</Form>
 		</Container>
 	);

@@ -18,7 +18,7 @@ entriesDb.mongoose
     .then(() => {
         console.log(`Connected to db: ${entriesDb.url}`);
     })
-    .catch((e: any) => {
+    .catch((e: Error) => {
         console.log('Failed to connect to db:', e);
         process.exit();
     });

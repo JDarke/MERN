@@ -1,4 +1,4 @@
-module.exports = (mongoose) => {
+module.exports = (mongoose: any): any => {
     const Entry = mongoose.model('entry',
         mongoose.Schema(
             {

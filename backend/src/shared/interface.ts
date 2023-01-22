@@ -5,3 +5,14 @@ export interface IEntry {
     date: string;
     time: string;
 }
+
+export interface IRequest {
+	body?: IEntry;
+	params?: { id: string };
+}
+
+export interface IDB {
+    mongoose: any;
+    url: string;
+    entries: any;
+}
