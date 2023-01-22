@@ -25,3 +25,7 @@ th, td {
   filter: invert(1);
 }
 
+.btn-info {
+  color: white !important;
+}
+

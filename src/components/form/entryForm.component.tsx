@@ -72,7 +72,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 	};
 
 	return (
-		<Container className="mt-4 mb-5 d-flex flex-column align-items-center form-wrapper">
+		<Container className="mt-4 mb-4 d-flex flex-column align-items-center form-wrapper">
 			{!entry && <h4 className="mb-4 text-center">Create new entry</h4>}
 			<Form>
 				<Form.Group className="mb-3  d-flex" controlId="form.title">
@@ -122,7 +122,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 
 				<div className="d-flex flex-row">
 					<Form.Label className="mb-0 custom-label">Time</Form.Label>
-					<Form.Group className="mb-3" controlId="form.time.hour">
+					<Form.Group controlId="form.time.hour">
 						<Form.Control
 							size='sm'
 							onChange={handleTimeChange}
@@ -137,7 +137,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 						</Form.Control>
 					</Form.Group>
 					<div className="ms-2">:</div>
-					<Form.Group className="mb-3 ms-2 d-flex" controlId="form.time.minute">
+					<Form.Group className="ms-2 d-flex" controlId="form.time.minute">
 						<Form.Control
 							size='sm'
 							onChange={handleTimeChange}
@@ -152,7 +152,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 							))}
 						</Form.Control>
 					</Form.Group>
-					<Form.Group className="mb-3 ms-3 d-flex" controlId="form.time.type">
+					<Form.Group className="ms-3 d-flex" controlId="form.time.type">
 						<Form.Control
 							size='sm'
 							onChange={handleTimeChange}
@@ -169,7 +169,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 				</div>
 
 			</Form>
-			<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary btn-submit">Submit</button>
+			<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary btn-submit mt-4">Submit</button>
 		</Container>
 	);
 };

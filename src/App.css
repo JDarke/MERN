@@ -1,16 +1,19 @@
 .App {
   background-color:  #3e485a;
   min-height: 100vh;
-  color: white;
+  color: rgb(238, 238, 238);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
   width: 80%;
   min-width: 800px;
+  min-height: 620px;
   background:  #282c34;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
   border-radius: 16px;
-  margin-top: 10vh;
 }
 
 .view-tabs {
