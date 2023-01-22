@@ -47,12 +47,12 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <div className="wrapper">
+    <div className="App d-flex flex-column align-items-center">
+      <div className="wrapper d-flex flex-column align-items-center p-5">
         <header className="header mb-3">
           <h2>DevTask DB</h2>
         </header>
-        <div className="view-tabs">
+        <div className="view-tabs d-flex flex-row align-items-center justify-content-around w-100">
           <div className={view === 'add' ? 'view-tab w-100 active' : 'view-tab w-100 '} onClick={() => setView('add')}>Add</div>
           <div className={view === 'review' ? 'view-tab w-100 active' : 'view-tab w-100 '} onClick={() => setView('review')}>Review</div>
         </div>

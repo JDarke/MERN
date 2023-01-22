@@ -37,16 +37,14 @@ __ADD ENTRY__:
         date: string; (yyyy/mm/dd)
         time: string; (hh:mm am/pm)
     }
-    res: [
-        {
+    res: [{
             _id: string;
             title: string;
             author: string;
             text: string;
             date: string; (yyyy/mm/dd)
             time: string; (hh:mm am/pm) 
-        }
-    ]
+        }]
 
 __GET ENTRIES__:
     `/api/entries`
