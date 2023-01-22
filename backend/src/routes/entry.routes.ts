@@ -1,4 +1,5 @@
-module.exports = app => {
+// api routes for CRUD
+module.exports = (app: any): void => {
   const entries = require("../controller/entry.controller");
   const router = require("express").Router();
   

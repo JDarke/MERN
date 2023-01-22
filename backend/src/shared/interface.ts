@@ -1,9 +1,11 @@
-export interface IEntry {
-    _id?: string;
+export interface IEntryBase {
     title: string;
     text: string;
     date: string;
     time: string;
+}
+export interface IEntry extends IEntryBase {
+    _id?: string;
 }
 
 export interface IRequest {

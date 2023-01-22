@@ -1,10 +1,10 @@
 import { IEntry, IRequest } from './../shared/interface';
+import { Response } from 'express';
 const db = require('../model');
 const Entry = db.entries;
 
-exports.addEntry = (req: IRequest, res: any) => {
-  console.log('add entry req received: ', req.body);
-
+// Create and Save a new Entry
+exports.addEntry = (req: IRequest, res: Response) => {
   const entry = new Entry({
     title: req.body.title,
     text: req.body.text,
@@ -24,7 +24,8 @@ exports.addEntry = (req: IRequest, res: any) => {
   );
 };
 
-exports.getAllEntries = (req: IRequest, res: any) => {
+// Retrieve all Entries from the database.
+exports.getAllEntries = (req: IRequest, res: Response) => {
   Entry
     .find()
     .then((entries: IEntry[]) => res.send(entries))
@@ -37,13 +38,13 @@ exports.getAllEntries = (req: IRequest, res: any) => {
   );
 }
 
-exports.deleteEntry = (req: IRequest, res: any) => {
-  console.log('delete entry req received: ', req);
+// Find a single Entry with an id and remove it from the database
+exports.deleteEntry = (req: IRequest, res: Response) => {
   const id = req.params.id;
   
   Entry.findByIdAndRemove(id)
-    .then(data => {
-    if (!data) {
+    .then((res: any) => {
+    if (!res) {
       res.status(404).send({
 				message: `Failed delete entry with id ${id} - entry not found`
       });
@@ -60,7 +61,8 @@ exports.deleteEntry = (req: IRequest, res: any) => {
     });
 };
 
-exports.updateEntry = (req: IRequest, res: any) => {
+// Update a Entry
+exports.updateEntry = (req: IRequest, res: Response) => {
   if (!req.body) {
     return res.status(400).send({
       message: "No data submitted for update"

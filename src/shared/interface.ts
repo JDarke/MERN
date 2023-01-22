@@ -6,7 +6,7 @@ export interface IHttpOptions {
 	body?: string;
 }
 
-export interface IEntryRequest {
+export interface IEntryBase {
 	title: string;
 	text: string;
 	date: string;
@@ -18,6 +18,6 @@ export interface IResponse {
 	error?: string;
 }
 
-export interface IEntry extends IEntryRequest {
+export interface IEntry extends IEntryBase {
 	_id: string;
 }

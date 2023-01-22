@@ -1,48 +1,70 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './entriesForm.style.css';
-import * as API from '../../service/api.service';
 import { Container, Form } from 'react-bootstrap';
-import { IEntryRequest } from '../../shared/interface';
+import { IEntryBase } from '../../shared/interface';
 
+// Create arrays of hours and minutes for time dropdowns
 const hours = Array.from(Array(12).keys()).map((hour) => (hour + 1).toString());
 const minutes = Array.from(Array(60).keys()).map((minute) => (minute < 10 ? `0${minute}` : minute.toString()));
 
 const EntryForm = ({ addEntry, entry = null }) => {
+	// Set initial values for form, use existing entry values if editing
 	const [formValues, setFormValues] = useState({
 		title: entry?.title || '',
 		text: entry?.text || '',
 		date: entry?.date || '',
 		time: {
-			hour: entry?.time?.split('-')[0] || '1',
-			minute: entry?.time?.split('-')[1]?.split(' ')[0] || '00',
-			type: entry?.time?.split('-')[1]?.split(' ')[1] || 'AM'
+			hour: entry?.time?.split(':')[0] || '1',
+			minute: entry?.time?.split(':')[1]?.split(' ')[0] || '00',
+			type: entry?.time?.split(':')[1]?.split(' ')[1] || 'AM'
 		}
 	});
+	const [initialValues, setInitialValues] = useState(formValues)
 
-	const handleChange = (event): void => {
-		console.log('event', event)
-		const { name, value } = event.target;
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		const { name, value } = event.currentTarget;
 		setFormValues({ ...formValues, [name]: value });
 	};
 
-	const handleTimeChange = (event): void => {
-		const { name, value } = event.target;
+	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+		const { name, value } = event.currentTarget;
 		setFormValues({ ...formValues, time: { ...formValues.time, [name]: value } });
 	};
 
 	const onSubmit = (): void => {
-		const newEntryRequest: IEntryRequest = {
+		const newEntryRequest: IEntryBase = {
 			title: formValues.title,
 			text: formValues.text,
 			date: formValues.date,
 			time: `${formValues.time.hour}:${formValues.time.minute} ${formValues.time.type}`
 		};
-
+		setFormValues({
+			title: '',
+			text: '',
+			date: '',
+			time: {
+				hour: '1',
+				minute: '00',
+				type: 'AM'
+			}
+		});
+		setInitialValues(formValues);
 		addEntry(newEntryRequest);
 	};
 
+	// Check if form has changed from initial values when editing
+	const formHasChanged = (): boolean => {
+		return JSON.stringify(formValues) !== JSON.stringify(initialValues);
+	}
+
 	const formIsValid = (): boolean => {
-		return formValues.title && formValues.text && formValues.date && formValues.time.hour && formValues.time.minute && formValues.time.type;
+		return formValues.title 
+			&& formValues.text
+			&& formValues.date
+			&& formValues.time.hour
+			&& formValues.time.minute
+			&& formValues.time.type
+			&& formHasChanged();
 	};
 
 	useEffect(() => {
@@ -123,8 +145,7 @@ const EntryForm = ({ addEntry, entry = null }) => {
 							as="select"
 							name="minute"
 						>
-							{
-								minutes.map((item, index) => (
+							{minutes.map((item, index) => (
 									<option key={index} value={item}>
 										{item}
 									</option>
@@ -147,8 +168,9 @@ const EntryForm = ({ addEntry, entry = null }) => {
 						</Form.Control>
 					</Form.Group>
 				</div>
-				<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary">Submit</button>
+				
 			</Form>
+			<button onClick={onSubmit} disabled={!formIsValid()} className="btn btn-primary">Submit</button>
 		</Container>
 	);
 };

@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as API from './service/api.service';
 import EntriesTable from './components/table/entriesTable.component';
-import { IEntry, IEntryRequest, IResponse } from './shared/interface';
+import { IEntry, IEntryBase, IResponse } from './shared/interface';
 import EntryForm from './components/form/entryForm.component';
 
 
@@ -11,11 +11,12 @@ const App = () => {
   const [entries, setEntries] = useState<IEntry[]>([]);
   const [view, setView] = useState('review');
 
-  const addEntry = (entry: IEntryRequest): void => {
+  const addEntry = (entry: IEntryBase): void => {
     API.addEntry(entry)
       .then((res: IResponse) => {
         if (!res.error) {
           setEntries([...entries, ...res.data]);
+          setView('review');
         } else {
           window.alert(res.error);
         }

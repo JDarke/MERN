@@ -1,9 +1,9 @@
 import { BASEURL } from "../shared/config";
 import { HttpMethod } from "../shared/enum";
-import { IEntry, IEntryRequest, IHttpOptions, IResponse } from '../shared/interface';
-
+import { IEntry, IEntryBase, IHttpOptions, IResponse } from '../shared/interface';
 
 const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Promise<IResponse> => {
+	// generic request handler
 	try {
 		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
 		const data: IEntry[] | Error = await response.json();
@@ -18,7 +18,7 @@ const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Prom
 	}
 };
 
-export const addEntry = async (req: IEntryRequest): Promise<IResponse> => {
+export const addEntry = async (req: IEntryBase): Promise<IResponse> => {
 	const endpoint = '/api/entries';
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.POST,

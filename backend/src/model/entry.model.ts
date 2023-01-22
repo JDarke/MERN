@@ -1,3 +1,4 @@
+// Define the schema for the entry model
 module.exports = (mongoose: any): any => {
     const Entry = mongoose.model('entry',
         mongoose.Schema(
