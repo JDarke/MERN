@@ -1,6 +1,6 @@
 import { BASEURL } from "../shared/config";
 import { HttpMethod } from "../shared/enum";
-import { IEntry, IEntryBase, IHttpOptions, IResponse } from '../shared/interface';
+import { IEntry, IEntryBase, IFileResponse, IHttpOptions, IResponse } from '../shared/interface';
 
 const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Promise<IResponse> => {
 	// generic request handler
@@ -56,4 +56,22 @@ export const updateEntry = async (req: IEntry): Promise<IResponse> => {
 	};
 
 	return sendRequest(endpoint, requestOptions);
+};
+
+export const getPdf = async (id: string): Promise<IFileResponse> => {
+	const endpoint = `/api/entries/${id}`;
+	const requestOptions: IHttpOptions = {
+		method: HttpMethod.GET,
+	};
+	try {
+		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
+		const data: string | Error = await response.text();
+
+		if (!response.ok) {
+			throw new Error((data as unknown as Error).message);
+		}
+		return {data};
+	}	catch (e) {
+		return {error: e.message};
+	}
 };

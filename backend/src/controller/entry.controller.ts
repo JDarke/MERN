@@ -87,3 +87,22 @@ exports.updateEntry = (req: IRequest, res: Response) => {
       });
     });
 };
+
+exports.getPdf = (req: IRequest, res: Response) => {
+	const id = req.params.id;
+
+  Entry
+    .find({ _id: id})
+    .then( async (entry: IEntry) => {
+			const pdfBuffer = await require('../pdf/pdf-generator')(entry[0]);
+			const pdfBase64string = pdfBuffer.toString('base64')
+			res.send(pdfBase64string);
+		})
+    .catch((e: Error) => {
+      res.status(500)
+        .send({
+          message: e.message || 'An error occurred - failed to fetch entries.'
+        });
+    }
+  );
+}

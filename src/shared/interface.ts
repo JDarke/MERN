@@ -19,6 +19,11 @@ export interface IResponse {
 	error?: string;
 }
 
+export interface IFileResponse {
+	data?: string;
+	error?: string;
+}
+
 export interface IEntry extends IEntryBase {
 	_id: string;
 }

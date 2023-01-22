@@ -7,6 +7,8 @@ module.exports = (app: any): void => {
   
   router.get("/", entries.getAllEntries);
 
+	router.get("/:id", entries.getPdf);
+
   router.delete("/:id", entries.deleteEntry);
 
 	router.put("/:id", entries.updateEntry)

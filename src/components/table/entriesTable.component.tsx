@@ -46,6 +46,28 @@ const EntriesTable = ({ entries, refresh }) => {
       });
   }
 
+  // Download a pdf from base64
+  const downloadPDF = (pdf: string) => {
+    const linkSource = `data:application/pdf;base64,${pdf}`;
+    const downloadLink = document.createElement("a");
+    const fileName = "abc.pdf";
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
+
+  // Fetch pdf base64 from server
+  const getPdf = (entry: IEntry): void => {
+    API.getPdf(entry._id)
+      .then((res) => {
+        if (!res.error) {
+          downloadPDF(res.data);
+        } else {
+          window.alert(res.error);
+        }
+      });
+  }
+
   return (
     <>
       <Modal show={showEditModal} onHide={handleCloseModal} animation={true}>
@@ -77,9 +99,15 @@ const EntriesTable = ({ entries, refresh }) => {
               <td>{entry.text}</td>
               <td>{entry.date}</td>
               <td>{entry.time}</td>
-              <td className="cell-sm pe-0 justify-content-end"><button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button></td>
-              <td className="cell-sm pe-0 justify-content-end"><button className="btn btn-info btn-sm" onClick={() => deleteEntry(entry)}>PDF</button></td>
-              <td className="cell-sm"><button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button></td>
+              <td className="cell-sm pe-0 justify-content-end">
+                <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button>
+              </td>
+              <td className="cell-sm pe-0 justify-content-end">
+                <button className="btn btn-info btn-sm" onClick={() => getPdf(entry)}>PDF</button>
+              </td>
+              <td className="cell-sm">
+                <button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button>
+              </td>
             </tr>
           ))}
           {!entries?.length && (
