@@ -13,7 +13,7 @@ Without Docker:
 
 # Start Backend
 - From /backend run `npm i` to install packages
-- run `npm run app` to start the server, or `npm run dev` for nodemon live reloading
+- run `npm run app` to start the server, or `npm run dev` for nodemon with live reloading
 The server runs on port 5001 by default.
 
 # Start Frontend

@@ -34,14 +34,6 @@ const App = () => {
       });
   }
 
-  const testEntry: IEntryBase = {
-    title: 'Entry 1',
-    author: 'Author 1',
-    text: 'Text 1',
-    date: 'Test date',
-    time: 'test time'
-}
-
   useEffect(() => {
     getEntries();
   }, []);
