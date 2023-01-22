@@ -49,12 +49,12 @@ const App = () => {
   return (
     <div className="App">
       <div className="wrapper">
-        <header className="header">
-          Entries App
+        <header className="header mb-3">
+          <h2>DevTask DB</h2>
         </header>
         <div className="view-tabs">
-          <div className="view-tab" onClick={() => setView('add')}>Add</div>
-          <div className="view-tab" onClick={() => setView('review')}>Review</div>
+          <div className={view === 'add' ? 'view-tab w-100 active' : 'view-tab w-100 '} onClick={() => setView('add')}>Add</div>
+          <div className={view === 'review' ? 'view-tab w-100 active' : 'view-tab w-100 '} onClick={() => setView('review')}>Review</div>
         </div>
         {view === 'review' && <EntriesTable entries={entries} refresh={getEntries} />}
         {view === 'add' && <EntryForm addEntry={addEntry} />}

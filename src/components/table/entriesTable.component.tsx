@@ -91,30 +91,30 @@ const EntriesTable = ({ entries, refresh }) => {
           </tr>
         </thead>
         <tbody>
-          {!!entries?.length && entries.map((entry) => (
-            <tr key={entry._id}>
-              <td>{entry._id.slice(-6)}</td>
-              <td>{entry.title}</td>
-              <td>{entry.author}</td>
-              <td>{entry.text}</td>
-              <td>{entry.date}</td>
-              <td>{entry.time}</td>
-              <td className="cell-sm pe-0 justify-content-end">
-                <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button>
-              </td>
-              <td className="cell-sm pe-0 justify-content-end">
-                <button className="btn btn-info btn-sm" onClick={() => getPdf(entry)}>PDF</button>
-              </td>
-              <td className="cell-sm">
-                <button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-          {!entries?.length && (
-            <tr>
-              <td colSpan={8}>No entries</td>
-            </tr>
-          )}
+          {!!entries?.length ?
+            entries.map((entry: IEntry) => (
+              <tr key={entry._id}>
+                <td>{entry._id.slice(-6)}</td>
+                <td>{entry.title}</td>
+                <td>{entry.author}</td>
+                <td>{entry.text}</td>
+                <td>{entry.date}</td>
+                <td>{entry.time}</td>
+                <td className="cell-sm pe-0 justify-content-end">
+                  <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button>
+                </td>
+                <td className="cell-sm pe-0 justify-content-end">
+                  <button className="btn btn-info btn-sm" onClick={() => getPdf(entry)}>PDF</button>
+                </td>
+                <td className="cell-sm">
+                  <button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button>
+                </td>
+              </tr>
+            )) : (
+              <tr>
+                <td colSpan={8} style={{textAlign: "center"}}>No entries</td>
+              </tr>
+            )}
         </tbody>
       </table>
     </>
