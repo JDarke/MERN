@@ -1,11 +1,11 @@
-import { BASEURL } from "../shared/config";
+import { API_ENDPOINT} from "../shared/config";
 import { HttpMethod } from "../shared/enum";
 import { IEntry, IEntryBase, IFileResponse, IHttpOptions, IResponse } from '../shared/interface';
 
 const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Promise<IResponse> => {
 	// generic request handler
 	try {
-		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
+		const response = await fetch(endpoint, requestOptions);
 		const data: IEntry[] | Error = await response.json();
 
 		if (!response.ok) {
@@ -18,27 +18,25 @@ const sendRequest = async (endpoint: string, requestOptions: IHttpOptions): Prom
 };
 
 export const addEntry = async (req: IEntryBase): Promise<IResponse> => {
-	const endpoint = '/api/entries';
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.POST,
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(req)
 	};
 
-	return sendRequest(endpoint, requestOptions);
+	return sendRequest(API_ENDPOINT, requestOptions);
 };
 
 export const getEntries = async (): Promise<IResponse> => {
-	const endpoint = '/api/entries';
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.GET,
 	};
 
-	return sendRequest(endpoint, requestOptions);
+	return sendRequest(API_ENDPOINT, requestOptions);
 };
 
 export const deleteEntry = async (id: string): Promise<IResponse> => {
-	const endpoint = `/api/entries/${id}`;
+	const endpoint = `${API_ENDPOINT}/${id}`;
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.DELETE,
 	};
@@ -47,7 +45,7 @@ export const deleteEntry = async (id: string): Promise<IResponse> => {
 };
 
 export const updateEntry = async (req: IEntry): Promise<IResponse> => {
-	const endpoint = `/api/entries/${req._id}`;
+	const endpoint = `${API_ENDPOINT}/${req._id}`;
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.PUT,
 		headers: { 'Content-Type': 'application/json' },
@@ -58,12 +56,11 @@ export const updateEntry = async (req: IEntry): Promise<IResponse> => {
 };
 
 export const getPdf = async (id: string): Promise<IFileResponse> => {
-	const endpoint = `/api/entries/${id}`;
 	const requestOptions: IHttpOptions = {
 		method: HttpMethod.GET,
 	};
 	try {
-		const response = await fetch(`${BASEURL}${endpoint}`, requestOptions);
+		const response = await fetch(`${API_ENDPOINT}/${id}`, requestOptions);
 		const data: string | Error = await response.text();
 
 		if (!response.ok) {

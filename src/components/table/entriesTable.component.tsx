@@ -112,7 +112,7 @@ const EntriesTable = ({ entries, refresh }) => {
               </tr>
             )) : (
               <tr>
-                <td colSpan={8} style={{textAlign: "center"}}>No entries</td>
+                <td colSpan={8} className="text-center pt-5">No entries</td>
               </tr>
             )}
         </tbody>

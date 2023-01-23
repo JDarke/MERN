@@ -16,6 +16,10 @@ th, td {
   white-space: nowrap;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .modal-dialog .modal-content {
   background: #282c34;
   color: rgb(227, 227, 227);

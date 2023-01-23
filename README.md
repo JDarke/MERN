@@ -1,8 +1,19 @@
 # ui-dev-task
 
+# Config variables
+Backend: `./backend/src/config/`
+    - DBURL = `mongodb://localhost:27017/entries` [database address - must match mongo port]
+    - CORSOPTIONS = {origin: `http://localhost:3000`} [allow access from FE - must match App port]
+    - PORT = 5001 [server port]
+
+Frontend: `./src/shared/config.ts` & `./.env`
+    - API_ENDPOINT = `http://localhost:5001/api/entries` [API URL - must match server port]
+    - PORT = 3000 [App port]
+
 # Initiate DB
 Using Docker:
     `docker run -p 27017:27017 --name expressdb -d mongo:latest`
+    This will start a mongoDB instance in a container running on port 27017
 
 Without Docker:
     - Install MongoDB community edition: https://www.mongodb.com/docs/manual/installation/
@@ -14,18 +25,19 @@ Without Docker:
 # Start Backend
 - From /backend run `npm i` to install packages
 - run `npm run app` to start the server, or `npm run dev` for nodemon with live reloading
-The server runs on port 5001 by default.
+*** The BE runs on port 5001 by default. If this port is in use, you will need to change the BASE_URL in `/src/config.ts` to match the current port ***
 
 # Start Frontend
 - From root, run `npm i` 
 - run `npm run start`
-*** The FE runs on port 3000 by default.  If this port is in use, you'll need to change the CORS origin in `/backend/src/config/server.ts` to match the current port ***
+*** The FE runs on port 3000 by default.  If this port is in use, you will need to change the CORS origin in `/backend/src/config/server.ts` to match the current port ***
 
 # Build
 - BE: `npm run compile`
 - FE: `npm run build`
 
 # API endpoints
+All listed parameters are required
 
 __ADD ENTRY__:
     `/api/entries`
@@ -97,4 +109,4 @@ __GET PDF__:
 It would obviously be preferable to have written tests for the components and api service, had time permitted.  
 I'd also have liked to refine the error handling, get it production-ready for deployment (move some of the config variables to the .env, run builds, write production instructions, etc.), and there are a couple of magic numbers in the CSS for the form that I'm not happy about.
 
-For improved user experience, the design should be made fully responsive.  The table format is of course not ideal for a narrow screen, so an alternate mobile-first design would be required, perhaps displaying the entries in a series of vertically stacked detail cards.
+For improved user experience, the design should be made fully responsive. The table format is of course not ideal for a narrow screen, so an alternative mobile-first design would be required, perhaps displaying the entries in a series of vertically stacked detail cards.
