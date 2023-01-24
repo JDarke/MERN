@@ -78,7 +78,13 @@ __GET ENTRIES__:
 __UPDATE ENTRY__:
 - `/api/entries/:id`
 - method: PUT
-- body: n/a
+- body: {
+    title: string;
+    author: string;
+        text: string;
+        date: string; (yyyy-mm-dd)
+        time: string; (hh:mm am/pm)
+    }
 - params: id: string
 - res: [{
             _id: string;
