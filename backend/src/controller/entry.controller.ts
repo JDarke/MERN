@@ -1,10 +1,10 @@
 import { IEntry, IRequest } from './../shared/interface';
 import { Response } from 'express';
 const db = require('../model');
-const Entry = db.entries;
+const Entry = db.entry;
 
 // Create and Save a new Entry
-exports.addEntry = (req: IRequest, res: Response) => {
+exports.addEntry = (req: IRequest, res: Response): void => {
   const entry = new Entry({
     title: req.body.title,
 		author: req.body.author,
@@ -26,7 +26,7 @@ exports.addEntry = (req: IRequest, res: Response) => {
 };
 
 // Retrieve all Entries from the database.
-exports.getAllEntries = (req: IRequest, res: Response) => {
+exports.getAllEntries = (req: IRequest, res: Response): void => {
   Entry
     .find()
     .then((entries: IEntry[]) => res.send(entries))
@@ -40,7 +40,7 @@ exports.getAllEntries = (req: IRequest, res: Response) => {
 }
 
 // Find a single Entry with an id and remove it from the database
-exports.deleteEntry = (req: IRequest, res: Response) => {
+exports.deleteEntry = (req: IRequest, res: Response): void => {
   const id = req.params.id;
   
   Entry.findByIdAndRemove(id)
@@ -63,9 +63,9 @@ exports.deleteEntry = (req: IRequest, res: Response) => {
 };
 
 // Update a Entry
-exports.updateEntry = (req: IRequest, res: Response) => {
+exports.updateEntry = (req: IRequest, res: Response): void => {
   if (!req.body) {
-    return res.status(400).send({
+    res.status(400).send({
       message: "No data submitted for update"
     });
   }
@@ -87,12 +87,12 @@ exports.updateEntry = (req: IRequest, res: Response) => {
     });
 };
 
-exports.getPdf = (req: IRequest, res: Response) => {
+exports.getPdf = (req: IRequest, res: Response): void => {
 	const id = req.params.id;
 
   Entry
     .find({ _id: id})
-    .then( async (entry: IEntry) => {
+    .then( async (entry: IEntry[]) => {
 			const pdfBuffer = await require('../pdf/pdf-generator')(entry[0]);
 			const pdfBase64string = pdfBuffer.toString('base64')
 			res.send(pdfBase64string);

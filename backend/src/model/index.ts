@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const database: IDB = {
     mongoose: mongoose, 
     url: DBURL,
-    entries: require('./entry.model.ts')(mongoose),
+    entry: require('./entry.model.ts')(mongoose),
 };
 
 module.exports = database;

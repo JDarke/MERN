@@ -17,5 +17,5 @@ export interface IRequest {
 export interface IDB {
     mongoose: any;
     url: string;
-    entries: any;
+    entry: any;
 }

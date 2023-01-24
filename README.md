@@ -36,7 +36,7 @@ Without Docker:
 - BE: `npm run compile`
 - FE: `npm run build`
 
-# API endpoints
+# API endpoints/
 All listed parameters are required
 
 __ADD ENTRY__:
@@ -46,7 +46,7 @@ __ADD ENTRY__:
         title: string;
         author: string;
         text: string;
-        date: string; (yyyy/mm/dd)
+        date: string; (yyyy-mm-dd)
         time: string; (hh:mm am/pm)
     }
     res: [{
@@ -54,7 +54,7 @@ __ADD ENTRY__:
             title: string;
             author: string;
             text: string;
-            date: string; (yyyy/mm/dd)
+            date: string; (yyyy-mm-dd)
             time: string; (hh:mm am/pm) 
         }]
 
@@ -68,7 +68,7 @@ __GET ENTRIES__:
                 title: string;
                 author: string;
                 text: string;
-                date: string; (yyyy/mm/dd)
+                date: string; (yyyy-mm-dd)
                 time: string; (hh:mm am/pm) 
             }, 
             ...
@@ -84,7 +84,7 @@ __UPDATE ENTRY__:
             title: string;
             author: string;
             text: string;
-            date: string; (yyyy/mm/dd)
+            date: string; (yyyy-mm-dd)
             time: string; (hh:mm am/pm) 
         }]
 

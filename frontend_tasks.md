@@ -76,8 +76,8 @@ Text font-size: 12px
 Present clear documentation in a *README.md* file.
 For example, installing and running the application  :
 ```bash
-[user@weaverlabs] $ nmp install
-[user@weaverlabs] $ npm start
+[user@device] $ nmp install
+[user@device] $ npm start
 ```
 
 All endpoints are documented as well as their APIs.
