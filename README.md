@@ -1,4 +1,5 @@
-# ui-dev-task
+# MERN App
+Simple database entry app.
 
 # Config variables
 Backend: `./backend/src/config/`
