@@ -81,10 +81,10 @@ __UPDATE ENTRY__:
 - body: {
     title: string;
     author: string;
-        text: string;
-        date: string; (yyyy-mm-dd)
-        time: string; (hh:mm am/pm)
-    }
+    text: string;
+    date: string; (yyyy-mm-dd)
+    time: string; (hh:mm am/pm)
+}
 - params: id: string
 - res: [{
             _id: string;
@@ -116,4 +116,6 @@ __GET PDF__:
 It would obviously be preferable to have written tests for the components and api service, had time permitted.  
 I'd also have liked to refine the error handling, get it production-ready for deployment (move some of the config variables to the .env, run builds, write production instructions, etc.), and there are a couple of magic numbers in the CSS for the form that I'm not happy about.
 
-For improved user experience, the design should be made fully responsive. The table format is of course not ideal for a narrow screen, so an alternative mobile-first design would be required, perhaps displaying the entries in a series of vertically stacked detail cards.
+The form fields currently only have type-checking as basic protection, but next steps should include proper sanitizing to protect against malicious attack entry to the db when submitting data.
+
+For improved user experience, the design should be made fully responsive. The table format is of course not ideal for a narrow screen, so an alternative mobile-first design would be required, perhaps displaying the entries in a series of vertically stacked detail cards.  The form fields should also highlight any invalid text entries.

@@ -4,8 +4,12 @@ import { Container, Form } from 'react-bootstrap';
 import { IEntryBase } from '../../shared/interface';
 
 // Create arrays of hours and minutes for time dropdowns
-const hours = Array.from(Array(12).keys()).map((hour) => hour < 9 ? `0${hour + 1}` : (hour + 1).toString());
-const minutes = Array.from(Array(60).keys()).map((minute) => minute < 10 ? `0${minute}` : minute.toString());
+const hours = Array.from(
+		Array(12).keys()
+	).map((hour) => hour < 9 ? `0${hour + 1}` : (hour + 1).toString());
+const minutes = Array.from(
+		Array(60).keys()
+	).map((minute) => minute < 10 ? `0${minute}` : minute.toString());
 
 const EntryForm = ({ addEntry, entry = null }) => {
 	// Set initial values for form, use existing entry values if editing
@@ -24,12 +28,21 @@ const EntryForm = ({ addEntry, entry = null }) => {
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = event.currentTarget;
-		setFormValues({ ...formValues, [name]: value });
+		setFormValues({
+			...formValues,
+			[name]: value
+		});
 	};
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = event.currentTarget;
-		setFormValues({ ...formValues, time: { ...formValues.time, [name]: value } });
+		setFormValues({
+			...formValues,
+			time: {
+				...formValues.time,
+				[name]: value
+			}
+		});
 	};
 
 	const onSubmit = (): void => {

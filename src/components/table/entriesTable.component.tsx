@@ -101,13 +101,19 @@ const EntriesTable = ({ entries, refresh }) => {
                 <td>{entry.date}</td>
                 <td>{entry.time}</td>
                 <td className="cell-sm pe-0 justify-content-end">
-                  <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>Edit</button>
+                  <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(entry)}>
+                    Edit
+                  </button>
                 </td>
                 <td className="cell-sm pe-0 justify-content-end">
-                  <button className="btn btn-info btn-sm" onClick={() => getPdf(entry)}>PDF</button>
+                  <button className="btn btn-info btn-sm" onClick={() => getPdf(entry)}>
+                    PDF
+                  </button>
                 </td>
                 <td className="cell-sm">
-                  <button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>Delete</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => deleteEntry(entry)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             )) : (
